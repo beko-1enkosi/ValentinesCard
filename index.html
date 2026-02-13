@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta property="og:title" content="A message for my favorite dev">
+  <meta property="og:description" content="Click to open your Valentine's card!">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Valentine’s, Dev Friend 💘</title>
+  <style>
+    :root {
+      --bg1: #0b1020;
+      --bg2: #1a0f2e;
+      --card: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.18);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --accent: #ff4d8d;
+      --accent2: #7c5cff;
+      --glow: rgba(255, 77, 141, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1000px 600px at 20% 15%, rgba(124, 92, 255, 0.25), transparent 60%),
+        radial-gradient(900px 500px at 85% 25%, rgba(255, 77, 141, 0.22), transparent 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+      overflow-x: hidden;
+    }
+
+    .wrap { width: min(720px, 100%); }
+
+    .card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(600px 220px at 30% 0%, rgba(255, 77, 141, 0.25), transparent 60%),
+                  radial-gradient(600px 220px at 80% 100%, rgba(124, 92, 255, 0.23), transparent 60%);
+      filter: blur(10px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .inner { position: relative; z-index: 1; }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(0,0,0,0.18);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(26px, 4vw, 38px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .grid { grid-template-columns: 1.2fr 0.8fr; }
+    }
+
+    .panel {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(0,0,0,0.16);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .panel h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: rgba(255,255,255,0.9);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      background: rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 12px;
+      border-radius: 14px;
+      overflow: auto;
+      line-height: 1.55;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button, .linkbtn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.2);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      user-select: none;
+    }
+
+    button:hover, .linkbtn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,0.35); }
+    button:active, .linkbtn:active { transform: translateY(0px); }
+
+    .primary {
+      border-color: rgba(255, 77, 141, 0.45);
+      box-shadow: 0 0 0 4px rgba(255, 77, 141, 0.12);
+    }
+
+    .footer {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0;
+      animation: floatUp 4.2s linear infinite;
+      filter: drop-shadow(0 0 10px var(--glow));
+    }
+
+    @keyframes floatUp {
+      0%   { transform: translateY(30px) scale(0.9); opacity: 0; }
+      10%  { opacity: 0.85; }
+      80%  { opacity: 0.75; }
+      100% { transform: translateY(-760px) scale(1.25); opacity: 0; }
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.9);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+    }
+
+    .toast.show { opacity: 1; }
+    a { color: inherit; text-decoration: none; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="hearts" id="hearts"></div>
+
+      <div class="inner">
+        <header>
+          <div class="pill">💘 Happy Valentine’s Day • <span id="year"></span></div>
+          <div class="pill">👩🏽‍💻👨🏽‍💻 For my dev friends</div>
+        </header>
+
+        <h1 id="title">Happy Valentine’s, Dev Friend! 💖</h1>
+        <p class="subtitle" id="subtitle">
+          May your code compile on the first try, your tests stay green, and your deploys be drama-free ✨
+        </p>
+
+        <div class="grid">
+          <section class="panel">
+            <h2>💌 A tiny message</h2>
+            <div class="code" id="messageBlock"></div>
+            <div class="btns">
+              <button class="primary" id="copyBtn">Copy message</button>
+              <button id="confettiBtn">Send hearts</button>
+            </div>
+          </section>
+
+          <aside class="panel">
+            <h2>🧠 Dev Valentine facts</h2>
+            <div class="code" id="facts"></div>
+            <div class="footer">
+              <span>Made with ❤️ + caffeine</span>
+              <span>— from <strong id="fromName">Thobeka</strong></span>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    // ====== Customize these ======
+    const FROM_NAME = "Thobeka Nkosi";
+    const FRIENDS = ["Dev Friend", "Bestie", "Code Buddy"]; // just for cycling, optional
+
+    const MESSAGE = `Hey friend 💘
+Happy Valentine’s Day!
+
+Thanks for debugging life with me 😄
+May your merges be conflict-free and your WiFi strong.
+
+Keep shipping. Keep shining. 🚀✨
+
+— ${FROM_NAME}`;
+
+    // ====== Page init ======
+    document.getElementById("fromName").textContent = FROM_NAME.split(" ")[0];
+    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("messageBlock").textContent = MESSAGE;
+
+    const factLines = [
+      "✅ You are the reason production stays alive.",
+      "✅ You turn 'it’s broken' into 'fixed' like magic.",
+      "✅ You deserve REST APIs… and actual rest 😅",
+      "✅ Valentine’s rule: no bugs, only features 💞"
+    ];
+    document.getElementById("facts").textContent = factLines.join("\n");
+
+    // Title cycles through FRIENDS
+    let idx = 0;
+    setInterval(() => {
+      idx = (idx + 1) % FRIENDS.length;
+      document.getElementById("title").textContent = `Happy Valentine’s, ${FRIENDS[idx]}! 💖`;
+    }, 2500);
+
+    // Copy button
+    const toast = document.getElementById("toast");
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(MESSAGE);
+        toast.textContent = "Copied message ✅";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1300);
+      } catch {
+        toast.textContent = "Copy failed — select text manually 🙏";
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1600);
+      }
+    });
+
+    // Hearts animation
+    const heartsWrap = document.getElementById("hearts");
+    function spawnHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = Math.random() > 0.5 ? "💗" : "💘";
+      heart.style.left = Math.random() * 100 + "%";
+      heart.style.bottom = "-20px";
+      heart.style.animationDuration = (3.2 + Math.random() * 2.2) + "s";
+      heart.style.fontSize = (14 + Math.random() * 16) + "px";
+      heartsWrap.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5200);
+    }
+
+    // Slow ambient hearts
+    setInterval(spawnHeart, 650);
+
+    // Button: extra hearts burst
+    document.getElementById("confettiBtn").addEventListener("click", () => {
+      for (let i = 0; i < 18; i++) setTimeout(spawnHeart, i * 45);
+    });
+  </script>
+</body>
+</html>
